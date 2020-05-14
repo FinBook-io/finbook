@@ -1,0 +1,25 @@
+dsl Ness
+
+use Finbook
+
+Broker(path = empty, port = empty, secondaryPort = empty)
+	User("io.finbook.sensor", "io.finbook.sensor")
+	User("io.finbook.datamart", "io.finbook.datamart")
+	User("io.finbook.handler", "io.finbook.handler")
+
+Datalake(scale=Month, path = empty) dl
+	Context io
+		Context finbook
+
+	Tank(Invoices) invoices as Event Contextual(io.finbook)
+	Tank(ProcessedInvoices) processedInvoices as Event Contextual(io.finbook)
+
+Terminal sensorTerminal
+	Publish(dl.invoices)
+
+Terminal datamartTerminal
+	Subscribe(dl.processedInvoices)
+
+Terminal handlerTerminal
+	Publish(dl.processedInvoices)
+	Subscribe(dl.invoices)

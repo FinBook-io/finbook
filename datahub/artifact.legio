@@ -1,0 +1,26 @@
+dsl Legio
+
+Artifact(groupId = "io.finbook", version = "1.0.0") data-hub as Solution
+	Model(language = "Ness", version = "4.0.0", sdk = "4.0.0")
+    Box(language = "Konos", version = "8.2.8")
+	Imports
+		Compile("io.intino.alexandria", "core-framework", "2.0.4")
+	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.finbook.datahub.box.Main")
+	IntinoPlugin(artifact = "io.intino.ness:data-hub-terminal-plugin:2.1.1", pluginClass = "io.intino.ness.datahubterminalplugin.DataHubTerminalsPluginLauncher", phase=Export)
+    Distribution(monentia.release)
+
+	Parameter("home")
+	Parameter("broker_port")
+    Parameter("broker_secondary_port")
+
+Repository("intino-maven")
+	Language("https://artifactory.intino.io/artifactory/releases")
+	Release("https://artifactory.intino.io/artifactory/releases")
+
+Repository("monentia-maven") monentia
+	Release("https://artifactory.monentia.es/artifactory/libs-release-local") release
+
+RunConfiguration local
+	Argument("home", "./temp")
+	Argument("broker_port", "63000")
+	Argument("broker_secondary_port", "1883")

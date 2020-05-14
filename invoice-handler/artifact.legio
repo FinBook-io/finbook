@@ -1,0 +1,45 @@
+dsl Legio
+
+Artifact(groupId = "io.finbook", version = "1.0.0") invoice-handler as Product
+	Model(language = "Proteo", version = "3.0.0", sdk = "4.0.0")
+	Box(language = "Konos", version = "8.2.8")
+	DataHub("io.finbook.datahub", "handler-terminal", "1.0.0")
+	Imports
+		Compile("io.intino.alexandria", "core-framework", "2.0.4")
+		Compile(groupId = "io.intino.alexandria", artifactId = "datalake", version = "2.1.0")
+	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.finbook.invoicehandler.box.Main")
+
+	Parameter("home")
+	Parameter("port")
+	Parameter("workspace")
+
+	Parameter("terminal_url")
+	Parameter("terminal_user")
+	Parameter("terminal_password")
+	Parameter("terminal_clientId")
+	Parameter("terminal_working_directory")
+
+	Parameter("datalake_directory")
+
+Repository(identifier = "intino-maven")
+	Language("https://artifactory.intino.io/artifactory/release-languages") language
+	Release("https://artifactory.intino.io/artifactory/releases")
+
+Repository("monentia-maven") monentia
+	Release("https://artifactory.monentia.es/artifactory/libs-release-local") release
+	Language("https://artifactory.monentia.es/artifactory/release-languages") language
+
+RunConfiguration local
+	Argument("home", "./temp")
+	Argument("port", "9007")
+	Argument("workspace", "")
+
+	Argument("terminal_url", "failover:(tcp://localhost:63000)")
+	Argument("terminal_user", "io.finbook.handler")
+	Argument("terminal_password", "io.finbook.handler")
+	Argument("terminal_clientId", "io.finbook.handler")
+
+	Argument("home", "./temp")
+	Argument("terminal_user", "io.finbook.handler")
+	Argument("terminal_password", "io.finbook.handler")
+	Argument("terminal_clientId", "io.finbook.handler")

@@ -1,0 +1,8 @@
++ datahub
+	- stage in "stage"
+	- terminal in "terminals"
+
++ datalake
+	- eventStore in "events"
+
++ datamart in "datamarts"
