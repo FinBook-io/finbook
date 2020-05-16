@@ -1,26 +1,23 @@
-package io.finbook.invoicehandler.box;
+package io.finbook.tester.box;
 
-import io.finbook.invoicehandler.Archetype;
+import io.finbook.tester.Archetype;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-
 	public static void main(String[] args) {
 		args = updateFrom(args);
-
-		InvoiceHandlerConfiguration configuration = new InvoiceHandlerConfiguration(args);
-		InvoiceHandlerBox box = new InvoiceHandlerBox(configuration);
-
+		TesterConfiguration testerConfiguration = new TesterConfiguration(args);
+		TesterBox box = new TesterBox(testerConfiguration);
 		box.start();
 		Runtime.getRuntime().addShutdownHook(new Thread(box::stop));
 	}
 
 	private static String[] updateFrom(String[] args) {
 		Map<String, String> argsMap = getArgsMapFromArray(args);
-		Archetype archetype = new Archetype(new InvoiceHandlerConfiguration(args).home());
+		Archetype archetype = new Archetype(new TesterConfiguration(args).home());
 
 		argsMap.put("datalake_directory", archetype.datalake().root().getAbsolutePath());
 		argsMap.put("terminal_working_directory", archetype.datahub().terminal().getAbsolutePath());

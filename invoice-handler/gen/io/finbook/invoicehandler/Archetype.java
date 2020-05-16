@@ -32,10 +32,6 @@ public class Archetype {
 		return new Datalake(root);
 	}
 
-	public Datamart datamart() {
-		return new Datamart(root);
-	}
-
 	public static class Datahub {
 		private final File root;
 
@@ -74,19 +70,6 @@ public class Archetype {
 		}
 	}
 
-	public static class Datamart {
-		private final File root;
-
-		public Datamart(File parent) {
-			this.root = new File(parent, "datamarts");
-			root.mkdirs();
-		}
-
-		public File root() {
-			return this.root;
-		}
-	}
-
 	public static class Relative {
         private final String name;
         private final File root;
@@ -107,10 +90,6 @@ public class Archetype {
 
         public Datalake datalake() {
         	return new Datalake(root, name);
-        }
-
-        public Datamart datamart() {
-        	return new Datamart(root, name);
         }
 
         public static class Datahub {
@@ -152,21 +131,6 @@ public class Archetype {
 
         	public String eventStore() {
         		return "events";
-        	}
-        }
-
-        public static class Datamart {
-        	private final File root;
-        	private final String name;
-
-        	public Datamart(File parentRoot, String parent) {
-        		this.root = new File(parent, "datamarts");
-        		root.mkdirs();
-        		this.name = parent + (!parent.isEmpty() ? "/" : "") + "datamarts";
-        	}
-
-        	public String root() {
-        		return this.name;
         	}
         }
 	}

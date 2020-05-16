@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/reports/pom.xml" />
         <option value="$PROJECT_DIR$/simulator/pom.xml" />
         <option value="$PROJECT_DIR$/invoice-handler/pom.xml" />
+        <option value="$PROJECT_DIR$/tester/pom.xml" />
       </list>
     </option>
   </component>

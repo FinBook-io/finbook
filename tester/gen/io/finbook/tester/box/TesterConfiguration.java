@@ -1,16 +1,12 @@
-package io.finbook.invoicehandler.box;
+package io.finbook.tester.box;
 
 import java.util.Map;
 import java.util.HashMap;
 
-public class InvoiceHandlerConfiguration extends io.intino.alexandria.core.BoxConfiguration {
+public class TesterConfiguration extends io.intino.alexandria.core.BoxConfiguration {
 
-	public InvoiceHandlerConfiguration(String[] args) {
+	public TesterConfiguration(String[] args) {
 		super(args);
-	}
-
-	public String datalakeDirectory() {
-		return get("datalake_directory");
 	}
 
 	public String terminalUser() {
@@ -23,6 +19,10 @@ public class InvoiceHandlerConfiguration extends io.intino.alexandria.core.BoxCo
 
 	public String terminalClientid() {
 		return get("terminal_clientId");
+	}
+
+	public String datalakeDirectory() {
+		return get("datalake_directory");
 	}
 
 	public String terminalUrl() {

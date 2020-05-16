@@ -4,5 +4,3 @@
 
 + datalake
 	- eventStore in "events"
-
-+ datamart in "datamarts"

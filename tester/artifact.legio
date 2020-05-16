@@ -1,13 +1,13 @@
 dsl Legio
 
-Artifact(groupId = "io.finbook", version = "1.0.0") invoice-handler as Product
-	Model(language = "Proteo", version = "3.0.0", sdk = "4.0.0")
+Artifact(groupId = "io.finbook", version = "1.0.0") tester as Product
+	Model(language = "Proteo", version = "LATEST", sdk = "LATEST")
 	Box(language = "Konos", version = "8.2.8")
-	DataHub("io.finbook.datahub", "handler-terminal", "1.0.0")
+	DataHub("io.finbook.datahub", "sensor-terminal", "1.0.0")
 	Imports
 		Compile("io.intino.alexandria", "core-framework", "2.0.4")
 		Compile(groupId = "io.intino.alexandria", artifactId = "datalake", version = "2.1.0")
-	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.finbook.invoicehandler.box.Main")
+	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.finbook.tester.box.Main")
 
 	Parameter("home")
 	Parameter("port")
@@ -32,6 +32,6 @@ RunConfiguration local
 	Argument("home", "./temp")
 	Argument("port", "9000")
 	Argument("terminal_url", "failover:(tcp://localhost:63000)")
-	Argument("terminal_user", "io.finbook.handler")
-	Argument("terminal_password", "io.finbook.handler")
-	Argument("terminal_clientId", "io.finbook.handler")
+	Argument("terminal_user", "io.finbook.sensor")
+	Argument("terminal_password", "io.finbook.sensor")
+	Argument("terminal_clientId", "io.finbook.sensor")
