@@ -13,10 +13,8 @@ public class InvoicesSubscriber implements java.util.function.Consumer<io.finboo
 	}
 
 	public void accept(io.finbook.datahub.events.Invoices event) {
-		System.out.println("Subscribe");
 		String xml = TextGenerator.getAsciiTextFrom(event.xml());
-		System.out.println(xml);
-		XMLHelper xmlHelper = new XMLHelper(xml);
+		XMLHelper xmlHelper = new XMLHelper(event, xml);
 		ProcessedInvoices processedInvoice = xmlHelper.getProcessedInvoice();
 		box.terminal().publish(processedInvoice);
 	}

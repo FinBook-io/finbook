@@ -22,17 +22,16 @@
         <outputRelativeToContentRoot value="true" />
         <module name="simulator" />
         <module name="reports" />
-        <module name="tester" />
         <module name="invoice-handler" />
         <module name="invoices" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11">
-      <module name="invoice-handler" target="11" />
-      <module name="invoices" target="11" />
-      <module name="reports" target="11" />
-      <module name="simulator" target="11" />
-      <module name="tester" target="11" />
+      <module name="invoice-handler" target="1.5" />
+      <module name="invoices" target="1.5" />
+      <module name="reports" target="1.5" />
+      <module name="simulator" target="1.5" />
+      <module name="tester" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,5 +1,6 @@
 package io.finbook.invoicehandler.box.helpers;
 
+import io.finbook.datahub.events.Invoices;
 import io.finbook.datahub.events.ProcessedInvoices;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,14 +24,16 @@ import java.util.Locale;
 public class XMLHelper {
 
     private static final String VOUCHER = "cfdi:Voucher";
-    private static final String TRANSMITTER = "cfdi:Transmitter";
+    private static final String TRANSMITTER = "cfdi:Issuer";
     private static final String RECEIVER = "cfdi:Receiver";
     private static  final String DATE_FORMAT = "E MMM dd HH:mm:ss zzz yyyy";
 
     private String xml;
+    private Invoices event;
 
-    public XMLHelper(String xml) {
+    public XMLHelper(Invoices event, String xml) {
         this.xml = xml;
+        this.event = event;
     }
 
     public ProcessedInvoices getProcessedInvoice() {
@@ -43,7 +46,9 @@ public class XMLHelper {
             document.getDocumentElement().normalize();
             xmlFile.delete();
 
-            ProcessedInvoices processedInvoices = new ProcessedInvoices();
+            ProcessedInvoices processedInvoices = new ProcessedInvoices()
+                    .ts(event.ts())
+                    .ss(event.ss());
             handleNodes(document.getChildNodes(), processedInvoices);
             return processedInvoices;
         } catch (ParserConfigurationException | SAXException | IOException e) {
