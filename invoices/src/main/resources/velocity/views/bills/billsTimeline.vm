@@ -1,0 +1,183 @@
+#parse("/velocity/layout/mainLayout.vm")
+#@mainLayout()
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/timeline.css">
+
+<div class="content leftbox">
+    <div class="contentTitle">
+        <h3>$msg.get("TMLN_FILTERS")</h3>
+    </div>
+    <br>
+    <form id="compareForm" action="/timeline">
+        <div class="container">
+            <h6><strong>$msg.get("GNRL_PERIOD")</strong></h6>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <p>$msg.get("GNRL_PERIODSTART")</p>
+                </div>
+                <div class="col-8">
+                    <input class="form-control" type="date" id="pStart1" value="2015-08-19" name="periodStart">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p>$msg.get("GNRL_PERIODEND")</p>
+                </div>
+                <div class="col-8">
+                    <input class="form-control" type="date" id="pEnd1" value="2020-08-19" name="periodEnd">
+                </div>
+            </div>
+            <br>
+            <h6><strong>$msg.get("GNRL_PRICERANGE")</strong></h6>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <p>$msg.get("GNRL_MINIMUM")</p>
+                </div>
+                <div class="col-8">
+                    <input class="form-control" type="number" id="pMin" name="min">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p>$msg.get("GNRL_MAXIMUM")</p>
+                </div>
+                <div class="col-8">
+                    <input class="form-control" type="number" id="pMax" name="max">
+                </div>
+            </div>
+            <br>
+            <h6><strong>$msg.get("GNRL_BILLTYPE")</strong></h6>
+            <div class="form-check-inline">
+                <label class="form-check-label" for="check1">
+                    <input type="checkbox" class="form-check-input" name="incomes" id="bIncomes" value="true">$msg.get("GNRL_INCOME")
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label" for="check2">
+                    <input type="checkbox" class="form-check-input" name="expenses" id="bExpenses" value="true">$msg.get("GNRL_EXPENSE")
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label" for="check2">
+                    <input type="checkbox" class="form-check-input" name="investments" id="bInvestments" value="true">$msg.get("GNRL_INVESTMENT")
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label" for="check2">
+                    <input type="checkbox" class="form-check-input" name="salaries" id="bSalaries" value="true">$msg.get("GNRL_SALARIE")
+                </label>
+            </div>
+            <br>
+            <br>
+            <h6><strong>$msg.get("GNRL_BILLORDER")</strong></h6>
+            <div class="form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="ascendent" id="ascendent" value="true">$msg.get("TMLN_ASCENDENT")
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="ascendent" id="descendent" value="false">$msg.get("TMLN_DESCENDENT")
+                </label>
+            </div>
+            <input type="submit" class="btn btn-primary" id="submitButton" value="$msg.get("TMLN_FILTER")">
+        </div>
+    </form>
+</div>
+<div class="content rightbox">
+<div class="timelineContainer" onscroll="handleScroll(this)">
+    <div class="contentTitle">
+        <h3>$msg.get("TMLN_BILLSTIMELINE")</h3>
+        <div>
+            <button id="infoButton" data-toggle="modal" data-target="#legendModal"><i
+                    class="fa fa-info-circle" aria-hidden="true"></i></button>
+        </div>
+    </div>
+<div class="timeline" id="timeline">
+    #set($even=true)
+    #foreach($bill in $timeline.getBillList())
+        #if($even)
+        <div class="billContainer left">
+            #set($even=false)
+        #else
+        <div class="billContainer right">
+            #set($even=true)
+        #end
+        #if($bill.getType()!="nomina" && $bill.getIssuerRFC()==$RFC)
+        <div class="box green" data-href="$bill.getUUID()">
+        #elseif ($bill.getType()=="nomina" && $bill.getIssuerRFC()==$RFC)
+        <div class="box orange" data-href="$bill.getUUID()">
+        #elseif($bill.getUse()=="G01" || $bill.getUse()=="G02" || $bill.getUse()=="G03")
+        <div class="box red" data-href="$bill.getUUID()">
+        #else
+        <div class="box blue" data-href="$bill.getUUID()">
+        #end
+
+        <div>
+            <h2>$dateTool.format("medium",$bill.getDate(),$locale)</h2>
+        </div>
+        <div class="billContainer-content">
+            <h4>$bill.getConcept()</h4>
+            <div class="billContainerAmount"><h4>$number.format("currency",$bill.getTotal())</h4></div>
+        </div>
+    </div>
+    </div>
+    #end
+</div>
+</div>
+</div>
+
+    <div class="modal fade" id="legendModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">$msg.get("TMLN_LEGEND")</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div>
+                        <img src="/img/legendgreen.png">
+                        <p>&nbsp&nbsp&nbsp$msg.get("GNRL_INCOME")</p>
+                    </div>
+                    <br>
+                    <div>
+                        <img src="/img/legendred.png">
+                        <p>&nbsp&nbsp&nbsp$msg.get("GNRL_EXPENSE")</p>
+                    </div>
+                    <br>
+                    <div>
+                        <img src="/img/legendblue.png">
+                        <p>&nbsp&nbsp&nbsp$msg.get("GNRL_INVESTMENT")</p>
+                    </div>
+                    <br>
+                    <div>
+                        <img src="/img/legendyellow.png">
+                        <p >&nbsp&nbsp&nbsp$msg.get("GNRL_SALARIE")</p>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">$msg.get("GNRL_CLOSE")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascript/timelineControl.js"></script>
+    <script src="/javascript/ajaxUtils.js"></script>
+    <script>
+        dateFromQuery();
+        minMaxFromQuery();
+        billTypeFromQuery();
+        orderFromQuery();
+        initRFC("$RFC");
+    </script>
+#end

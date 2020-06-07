@@ -1,0 +1,479 @@
+#parse("/velocity/layout/mainLayout.vm")
+#@mainLayout()
+
+<style>
+
+    thead {
+        background-color: rgb(0, 51, 102);
+        color: white;
+        ##font-size: 117%
+    }
+
+    [data-href] {
+        cursor: pointer;
+    }
+
+    .filters span {
+        border-bottom: 1px solid lightgray;
+    }
+
+    select {
+        margin-top: 10px;
+    }
+
+    .filter {
+        width: 100%;
+        border-radius: 3px;
+        border: 2px solid lightgray;
+        padding: 4px;
+        margin-top: 2px;
+        background-color: #d2d8dd;
+        opacity:0.95;
+    }
+
+    .leftbox {
+        float: left;
+        max-width: 17%;
+        margin-left: 3%;
+        margin-bottom: 2%;
+    }
+
+    .rightbox {
+        float: right;
+        max-width: 75%;
+        margin-right: 3%;
+        margin-bottom: 2%;
+    }
+
+    @media screen and (max-width: 1100px) {
+        .leftbox {
+            vertical-align: bottom;
+            float: none;
+            max-width: 90%;
+            margin-left: 5%;
+            margin-right: 0%
+        }
+
+        .rightbox {
+            vertical-align: top;
+            float: none;
+            max-width: 90%;
+            margin-left: 5%;
+            margin-right: 0%
+        }
+
+        .filters {
+            column-count: 4;
+        }
+
+        footer {
+            visibility: hidden;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        .filters {
+            column-count: 1
+        }
+
+        #scrollablePanel{
+            height:80vh;
+        }
+    }
+
+    @media screen and (max-height:810px){
+        footer{
+            visibility: hidden;
+        }
+    }
+
+    table{
+        line-height:1.17;
+    }
+
+    th{
+        cursor:pointer;
+    }
+
+    th i{
+        float:right;
+        opacity: 0.5;
+    }
+
+    .selected-th{
+        opacity: 1;
+    }
+
+    td{
+        min-width:110px;
+    }
+
+    .download-button{
+        margin-left:30px;
+        color: rgb(62,68,74)
+    }
+
+    #scrollablePanel{
+        overflow-y: scroll;
+        height:65vh
+    }
+
+    .numSpan{
+        text-align: right;
+        width: 80px;
+        display: inline-block;
+    }
+
+
+
+
+
+
+
+
+
+
+</style>
+
+
+<div class="container content leftbox">
+    <div class="contentTitle">
+        <h2>$msg.get("MYBILLS_FILTERS")</h2>
+    </div>
+    <br>
+    <div class="filters">
+        <span>$msg.get("GNRL_TYPE")</span>
+        <br>
+        <select class="filter" id="classSelect" onchange="updateFilters()">
+            #if($received)
+                <option value="issued">$msg.get("MYBILLS_ISSUED")</option>
+                <option value="received" selected>$msg.get("MYBILLS_RECEIVED")</option>
+            #else
+                <option value="issued" selected>$msg.get("MYBILLS_ISSUED")</option>
+                <option value="received">$msg.get("MYBILLS_RECEIVED")</option>
+            #end
+
+        </select>
+        <br>
+        #if($received)
+            <span>$msg.get("GNRL_ISSUER")</span>
+            <br>
+            <input class="filter" style="padding-bottom: 0px; margin-bottom: 0px" type="text" id="issuerInput"
+                   onkeyup="filter()" placeholder="$msg.get("MYBILLS_SEARCHISSUER")">
+        #else
+            <span>$msg.get("GNRL_RECEIVER")</span>
+            <br>
+            <input class="filter" style="padding-bottom: 0px; margin-bottom: 0px" type="text" id="receiverInput"
+                   onkeyup="filter()" placeholder="$msg.get("MYBILLS_SEARCHRECEIVER")">
+        #end
+
+        <br>
+        <div>
+            <span>Total: </span>
+            <br>
+            <input class="filter" type="number" id="minTotalInput" onkeyup="filter()" placeholder="$msg.get("GNRL_MINIMUM") total"><br>
+            <input class="filter" type="number" id="maxTotalInput" onkeyup="filter()" placeholder="$msg.get("GNRL_MAXIMUM") total">
+        </div>
+        <div>
+            <span>$msg.get("GNRL_DATE"): </span>
+            <br>
+            <input class="filter" type="date" id="pStart" name="periodStart" onkeyup="filter()"><br>
+            <input class="filter" type="date" id="pEnd" name="periodStart" onkeyup="filter()">
+        </div>
+        <span>$msg.get("GNRL_POSTALCODE") </span>
+        <br>
+        <input class="filter" type="text" id="pcInput" onkeyup="filter()" placeholder="$msg.get("MYBILLS_SEARCHPC")">
+        <br>
+        <span>$msg.get("MYBILLS_BILLTYPE") : </span>
+        <br>
+        <select class="filter" id="billTypeInput" onchange="filter()">
+            <option value="all">All</option>
+            #if($received)
+                <option value="purchases">$msg.get("GNRL_PURCHASE")</option>
+                <option value="services">$msg.get("GNRL_EXTERNALSERVICE")</option>
+                <option value="investments">$msg.get("GNRL_INVESTMENTS")</option>
+            #else
+                <option value="income">$msg.get("GNRL_INCOME")</option>
+                <option value="egress">$msg.get("GNRL_OUTCOME")</option>
+                <option value="payroll">$msg.get("GNRL_PAYROLL")</option>
+            #end
+
+
+        </select>
+    </div>
+</div>
+
+
+<div class="container content rightbox">
+    <div class="contentTitle">
+        <h2>$msg.get("MYBILLS_MYBILLS")</h2>
+    </div>
+
+    <br>
+    <div id="scrollablePanel" onscroll="handleScroll(this)">
+        <table class="table table-hover fixed_header" id="billsTable">
+            #if($bills)
+                <thead>
+                <tr>
+                    <th onclick="changeOrder(this)" id="date">$msg.get("GNRL_DATE") <i class="fas fa-sort"></i></th>
+                    <th onclick="changeOrder(this)" id="pc">$msg.get("GNRL_LOCATION") <i class="fas fa-sort"></i></th>
+                    <th onclick="changeOrder(this)" id="billType">$msg.get("GNRL_TYPE") <i class="fas fa-sort"></i></th>
+                    #if($received)
+                        <th onclick="changeOrder(this)" id="issuer">$msg.get("GNRL_ISSUER") <i class="fas fa-sort"></i></th>
+                    #else
+                        <th onclick="changeOrder(this)" id="receiver">$msg.get("GNRL_RECEIVER") <i class="fas fa-sort"></i></th>
+                    #end
+                    <th onclick="changeOrder(this)" id="total">Total <i class="fas fa-sort"></i></th>
+                    <th onclick="changeOrder(this)" id="currency">$msg.get("GNRL_CURRENCY") <i class="fas fa-sort"></i></th>
+                    <th>Download</th>
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($bill in $bills)
+                    <tr data-href="$bill.getUUID()">
+                        <td>$dateTool.format('medium',$bill.getDate(),$locale)</td>
+                        <td>$bill.getPC()</td>
+                        <td>$bill.getType()</td>
+                        #if($received)
+                            <td>$bill.getIssuerName()</td>
+                        #else
+                            <td>$bill.getReceiverName()</td>
+                        #end
+                        <td><span class="numSpan">$numberTool.currency($bill.getTotal())</span></td>
+                        <td>$bill.getCurrency()</td>
+                        <td>
+                            <a href="bills/$bill.getUUID()/bill.xml" download="$bill.getUUID()">
+                            <i class="fas fa-download download-button" onclick="preventRedirect()"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    #end
+                </tbody>
+            #else
+                <h2>There aren't bills uploaded to the database with your current RFC</h2>
+            #end
+
+        </table>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById("download_button").addEventListener("click", function(event){
+        event.preventDefault();
+    });
+</script>
+<script>
+   function handleScroll(elem){
+       var elemScrollPosition = elem.scrollHeight - elem.scrollTop - elem.clientHeight;
+       if(elemScrollPosition<=1 && !endResponse) loadNewBillPage();
+   }
+</script>
+<script>
+    var orderBy="";
+    var descending=true;
+
+    function swapSortDirectionIcon(e) {
+        $(e).find('.fas').toggleClass('fa-sort-down');
+        $(e).find('.fas').toggleClass('fa-sort-up');
+    }
+
+    function initDirectionIcon(e) {
+        $(e).find('.fas').toggleClass('fa-sort');
+        $(e).find('.fas').toggleClass('fa-sort-down');
+        $(e).find('.fas').toggleClass('selected-th');
+    }
+
+    function removeDirectionIconFromPrevious(elementId){
+        if (descending){
+            $(document.getElementById(elementId)).find('.fas').toggleClass('fa-sort-down');
+        }  else{
+            $(document.getElementById(elementId)).find('.fas').toggleClass('fa-sort-up');
+        }
+        $(document.getElementById(elementId)).find('.fas').toggleClass('fa-sort');
+        $(document.getElementById(elementId)).find('.fas').toggleClass('selected-th');
+    }
+
+    function changeOrder(e){
+        if (orderBy==e.id){
+            descending = !descending;
+            swapSortDirectionIcon(e);
+        } else{
+            if (orderBy!=null) removeDirectionIconFromPrevious(orderBy);
+            orderBy= e.id;
+            console.log("new");
+            initDirectionIcon(e);
+            descending=true;
+        }
+        filter();
+    }
+
+</script>
+
+<script>
+    var redirectPrevented;
+    function preventRedirect(){
+        redirectPrevented=true;
+    }
+
+    $('#billsTable').on('click', '*[data-href]', function () {
+        if (redirectPrevented) {
+            redirectPrevented=false;
+        } else{
+            window.location = /bills/ + $(this).data("href");
+        }
+
+    })
+</script>
+
+<script>
+
+
+
+    var timeout;
+
+    function filter() {
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            applyFilters()
+        }, 1000);
+    }
+
+    function applyFilters() {
+        endResponse=false;
+        requestNumber = 1;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                processJsonResponse(this.responseText);
+            }
+        };
+        var ajaxRequest;
+        if (document.getElementById("receiverInput") == null) {
+            ajaxRequest = "/filterbills?issuer=" + document.getElementById("issuerInput").value + "&minTotal=" + document.getElementById("minTotalInput").value + "&maxTotal=" + document.getElementById("maxTotalInput").value
+                    + "&PC=" + document.getElementById("pcInput").value + "&billType=" + document.getElementById("billTypeInput").value + "&periodStart=" + document.getElementById("pStart").value + "&periodEnd=" + document.getElementById("pEnd").value
+                    + "&orderBy=" + orderBy + "&orderDescending="+descending;
+        } else {
+            ajaxRequest = "/filterbills?receiver=" + document.getElementById("receiverInput").value + "&minTotal=" + document.getElementById("minTotalInput").value + "&maxTotal=" + document.getElementById("maxTotalInput").value
+                    + "&PC=" + document.getElementById("pcInput").value + "&billType=" + document.getElementById("billTypeInput").value + "&periodStart=" + document.getElementById("pStart").value + "&periodEnd=" + document.getElementById("pEnd").value
+                    + "&orderBy=" + orderBy + "&orderDescending="+descending;
+        }
+        xhttp.open("POST", ajaxRequest, true);
+        xhttp.send();
+    }
+
+    function processJsonResponse(jsonResponse) {
+        removeRowsFromTable();
+        var billsArray = JSON.parse(jsonResponse);
+        billsArray.forEach(appendToTable)
+    }
+
+    function removeRowsFromTable() {
+        $("#billsTable tbody tr").remove();
+    }
+</script>
+
+<script>
+    //AJAX
+    var requestNumber = 1;
+    var endResponse=false;
+
+    function loadNewBillPage() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                lastJsonResponse=this.responseText;
+                processJson(this.responseText);
+            }
+        };
+        xhttp.open("POST", "/loadbills?page=" + requestNumber, true);
+        xhttp.send();
+        requestNumber++;
+    }
+
+
+    function processJson(jsonBillList) {
+        if (jsonBillList == '"End"') {
+            console.log(jsonBillList)
+            endResponse=true;
+        } else {
+            var billsArray = JSON.parse(jsonBillList);
+            billsArray.forEach(appendToTable)
+        }
+    }
+
+    var billsTable = document.getElementById('billsTable').getElementsByTagName('tbody')[0];
+    ;
+
+    function appendToTable(bill) {
+        console.log(bill.UUID);
+        var newRow = billsTable.insertRow();
+        newRow.setAttribute("data-href", bill.UUID);
+        var newCell1 = newRow.insertCell(0);
+        newCell1.innerHTML = bill.date;
+        var newCell2 = newRow.insertCell(1);
+        newCell2.innerHTML = bill.PC;
+        var newCell3 = newRow.insertCell(2);
+        newCell3.innerHTML = bill.type;
+        var newCell4 = newRow.insertCell(3);
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("class") == "received") {
+            newCell4.innerHTML = bill.issuerName;
+        } else {
+            newCell4.innerHTML = bill.receiverName;
+        }
+        var newCell5 = newRow.insertCell(4);
+        $(newCell5).append('<span class="numSpan">'+ formatToCurrency(bill.total)+'</span>');
+        var newCell6 = newRow.insertCell(5);
+        newCell6.innerHTML = bill.currency;
+        var newCell7 = newRow.insertCell(6);
+        $(newCell7).append('<a href="bills/'+bill.UUID+'/bill.xml" download="'+bill.UUID+'">\n' +
+                '<i class="fas fa-download download-button" onclick="preventRedirect()"></i>\n' +
+                '</a>');
+
+    }
+
+    function formatToCurrency(number){
+        var formatter = new Intl.NumberFormat('de-DE', {
+            style: 'currency',
+            currency: 'EUR',
+        });
+        return formatter.format(number);
+    }
+</script>
+
+
+<script>
+    function updateFilters() {
+        window.location = "/bills?class=" + document.getElementById("classSelect").value;
+    }
+</script>
+    <script src="/javascript/queryHandler.js"></script>
+<script>
+    refreshIfRedirected();
+
+    function refreshPeriodDates() {
+        document.getElementById("pStart").value = getFirstPeriodStart();
+        document.getElementById("pEnd").value = getFirstPeriodEnd();
+    }
+
+    function refreshBillType() {
+        document.getElementById("billTypeInput");
+        for (var opt, j = 0; opt = billTypeInput.options[j]; j++) {
+            if (opt.value == getQueryParam("billType")) {
+                billTypeInput.selectedIndex = j;
+                break;
+            }
+        }
+    }
+
+    function refreshIfRedirected(){
+        if (getQueryParam("redirected")=="true"){
+            refreshPeriodDates();
+            refreshBillType();
+            applyFilters();
+        }
+    }
+</script>
+
+#end
