@@ -1,0 +1,30 @@
+#parse("/velocity/layout/mainLayout.vm")
+#@mainLayout()
+
+<link rel="stylesheet" href="/css/signAwait.css">
+
+<form id="logInForm" action="/login" method="post">
+    <input class="form-control" name="sign" value="$textToSign">
+</form>
+<div class="centered-div">
+    <div class="text-center">
+        <h2>$msg.get("SA_WAITINGFORSIGN")</h2>
+        <br>
+        <br>
+        <div class="spinner-border blue-spinner" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <iframe src="finbSign: $textToSign ws://localhost:8080/echo"></iframe>
+</div>
+
+<script src="/javascript/websocketControl.js">
+</script>
+
+<script>
+    openWebSocket("$textToSign");
+</script>
+
+
+
+#end

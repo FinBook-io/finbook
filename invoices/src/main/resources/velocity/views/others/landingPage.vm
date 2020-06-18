@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Finbook Company Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/landingPage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+    </style>
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#myPage"><span class="title-primary">Fin</span><span class="title-secondary">book</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#about">SOBRE NOSOTROS</a></li>
+                <li><a href="#portfolio">APLICACIÓN WEB</a></li>
+                <li><a href="#services">CARACTERÍSTICAS</a></li>
+                <li><a href="#testing">PRUEBA</a></li>
+                <li><a href="#pricing">PRECIOS</a></li>
+                <li><a href="#contact">CONTACTO</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="jumbotron text-center">
+    <div>
+        <h1><img src="/img/favicon28.png" alt="logo" id="mainImg"><span class="title-primary">in</span><span class="title-secondary">book</span></h1>
+    </div>
+    <p id="highConcept">No pierdas ni un segundo más con tus facturas</p>
+</div>
+
+<!-- Container (About Section) -->
+<div id="about" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>SOBRE Finbook</h2><br>
+            <h4>Finbook es una solución software que permite automatizar muchos de los procesos relacionados con la gestión de la facturación mediante una aplicación web y móvil.</h4><br>
+            <p>Las facturas conllevan ciertos problemas de control y gestión: dificultad para organizarlas, clasificarlas, ordenarlas, extraer información: gastos, ingresos, nóminas… etc.
+                Finbook te propone no perder ni un segundo más con tus facturas.
+                Si eres una empresa o autónomo, podrás subir todas tus facturas a nuestro servicio y disfrutar de manera inmediata de funcionalidades que supondrán un ahorro de tu tiempo y dinero.</p>
+            <br><button class="btn btn-default btn-lg">Saber más</button>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-briefcase logo"></span>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-grey">
+    <div class="row">
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-signal logo slideanim"></span>
+        </div>
+        <div class="col-sm-8">
+            <h2>QUÉ OFRECEMOS</h2><br>
+            <h4><strong>BUSCADOR/GESTOR DE FACTURAS:</strong> Gestión de facturas más cómoda que nunca: Sistema de búsqueda  archivado, visualización , descarga y mailing de facturas.</h4><br>
+            <h4><strong>ESTADÍSTICAS DE TU EMPRESA:</strong>Obtén estadísticas automatizadas acerca del ejercicio de tu empresa: visualiza tus ventas, gastos, balances , ratios financieros,etc, con gráficos y estadísticas interactivos y generados de manera automática.</h4><br>
+            <h4><strong>LIQUIDACIÓN DEL IVA:</strong> Olvídate de asesorías para realizar tus liquidaciones de IVA. Finbook provee un sistema de liquidación del IVA que cumple con los estándares españoles.</h4><br>
+            <h4><strong>CÁLCULO DE ESTADOS FINANCIEROS:</strong> Conoce al 100% el estado de las finanzas de tu empresa. Finbook generará los informes de pérdidas y ganancias, los informes de inversiones y los informes de amortización de tu empresa a partir de las facturas alojadas en el servicio.</h4><br>
+            <p><strong>SERVICIO PERSONALIZADO:</strong> ¿Necesitas alguna funcionalidad algo más personalizada acorde con las necesidades de tu empresa? ¡Contacta con nosotros!</p>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Container (Portfolio Section) -->
+<div id="portfolio" class="container-fluid text-center">
+    <h2>APLICACIÓN WEB</h2><br>
+    <h4>Algunos de las funcionalidades que ofrece la aplicación web de Finbook</h4>
+    <div class="row text-center slideanim">
+        <div class="col-sm-4 img-container">
+            <div class="thumbnail">
+                <img src="/img/graph3.png" alt="Paris" width="400" height="200">
+                <p><strong>Buscador de facturas</strong></p>
+                <p>Encuentra tus facturas de manera cómoda y sencilla</p>
+            </div>
+        </div>
+        <div class="col-sm-4 img-container">
+            <div class="thumbnail">
+                <img src="/img/graph.png" alt="New York" width="400" height="200">
+                <p><strong>Estadísticas financieras</strong></p>
+                <p>Estadísticas de las finanzas de tu empresa automatizadas</p>
+            </div>
+        </div>
+        <div class="col-sm-4 img-container">
+            <div class="thumbnail">
+                <img src="/img/graph2.png" alt="San Francisco" width="400" height="200">
+                <p><strong>Estados financieros </strong></p>
+                <p>Informes de tus estados financieros a un solo click</p>
+            </div>
+        </div>
+    </div><br>
+
+    <h2>Qué dicen nuestros consumidores</h2>
+    <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item">
+                <h4>"Servicio cómodo, sencillo y eficaz."<br><span>Armiche Rodríguez, Administrador de peluquería, We Are Glad You Aren't Bald</span></h4>
+            </div>
+            <div class="item active">
+                <h4>"Desde que uso Finbook, el control y gestión de mis facturas es mucho más cómodo. No he ahorrado solo en tiempo, también dinero."<br><span>Cristina Sánchez, Directora de tienda online, PCKomponentes </span></h4>
+            </div>
+            <div class="item">
+                <h4>"Antes las facturas llegaban a ser un quebradero de cabeza. Ahora con Finbook, ¡hasta les sacamos provecho!"<br><span>Carlos Ruíz, Director cadena restaurantes, Paco Chiringo</span></h4>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<!-- Container (Services Section) -->
+<div id="services" class="container-fluid text-center bg-grey">
+    <h2>CARACTERÍSTICAS</h2>
+    <h4>Características del servicio</h4>
+    <br>
+    <div class="row slideanim">
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-off logo-small"></span>
+            <h4>DISPONIBILIDAD</h4>
+            <p>Servicio disponible 24/7</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-flash logo-small"></span>
+            <h4>INMEDIATEZ</h4>
+            <p>Mínimo tiempo de respuesta</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-lock logo-small"></span>
+            <h4>SEGURIDAD</h4>
+            <p>Garantizamos la protección de datos</p>
+        </div>
+    </div>
+    <br><br>
+    <div class="row slideanim">
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-leaf logo-small"></span>
+            <h4>VERDE</h4>
+            <p>Menos papel, más oxígeno</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-certificate logo-small"></span>
+            <h4>CERTIFICACIÓN</h4>
+            <p>Trabajamos con estándares digitales</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-wrench logo-small"></span>
+            <h4>CONFIGURACIÓN</h4>
+            <p>Servicio adaptable a tus necesidades</p>
+        </div>
+    </div>
+</div>
+
+<!-- Container (Testing session Section) -->
+<div id="testing" class="container-fluid bg">
+    <div class="text-center">
+        <h2>PERIODO DE PRUEBA GRATUITO</h2>
+        <h4>¿Quieres probar la aplicación? Regístrate y obtén un periodo de prueba gratuito de 1 mes, sin ataduras.</h4>
+    </div>
+
+    <div class="text-center slideanim">
+        <button class="btn btn-lg">PROBAR AHORA</button>
+    </div>
+</div>
+
+<!-- Container (Pricing Section) -->
+<div id="pricing" class="container-fluid bg-grey">
+    <div class="text-center">
+        <h2>Precios</h2>
+        <h4>Elige un plan de pago que se de adapte a las necesidades de tu empresa</h4>
+    </div>
+    <div class="row slideanim">
+        <div class="col-sm-4 col-xs-12">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>Basic</h1>
+                </div>
+                <div class="panel-body">
+                    <p><strong>30</strong> subidas/día</p>
+                    <p><strong>900</strong> subidas/mes</p>
+                    <p><strong>50</strong> peticiones/día</p>
+                    <p><strong>1500</strong> peticiones/mes</p>
+                    <p>Acceso a <strong>todas las funcionalidades</strong> </p>
+                </div>
+                <div class="panel-footer">
+                    <h3>10€</h3>
+                    <h4>/mes</h4>
+                    <button class="btn btn-lg">Registrarse</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>Plus</h1>
+                </div>
+                <div class="panel-body">
+                    <p><strong>200</strong> subidas/día</p>
+                    <p><strong>6000</strong> subidas/mes</p>
+                    <p><strong>100</strong> peticiones/día</p>
+                    <p><strong>3000</strong> peticiones/mes</p>
+                    <p>Acceso a <strong>todas las funcionalidades</strong> </p>
+                </div>
+                <div class="panel-footer">
+                    <h3>20€</h3>
+                    <h4>/mes</h4>
+                    <button class="btn btn-lg">Registrarse</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>Pro</h1>
+                </div>
+                <div class="panel-body">
+                    <p><strong>1000</strong> subidas/día</p>
+                    <p><strong>30000</strong> subidas/mes</p>
+                    <p><strong>150</strong> peticiones/día</p>
+                    <p><strong>4500</strong> peticiones/mes</p>
+                    <p>Acceso a <strong>todas las funcionalidades</strong> </p>
+                </div>
+                <div class="panel-footer">
+                    <h3>40€</h3>
+                    <h4>/mes</h4>
+                    <button class="btn btn-lg">Registrarse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Container (Contact Section) -->
+<div id="contact" class="container-fluid bg">
+    <h2 class="text-center">CONTACTO</h2>
+    <div class="row">
+        <div class="col-sm-5">
+            <p>Contáctanos y te responderemos en 24 horas.</p>
+            <p><span class="glyphicon glyphicon-map-marker"></span> Gran Canaria, España</p>
+            <p><span class="glyphicon glyphicon-phone"></span> +34 928356166</p>
+            <p><span class="glyphicon glyphicon-envelope"></span> support@finbook.com</p>
+        </div>
+        <div class="col-sm-7 slideanim">
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <input class="form-control" id="name" name="name" placeholder="Nombre" type="text" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                </div>
+            </div>
+            <textarea class="form-control" id="comments" name="comments" placeholder="Comentario" rows="5"></textarea><br>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <button class="btn btn-default pull-right" type="submit">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<footer class="container-fluid text-center bg-grey">
+    <a href="#myPage" title="To Top">
+        <span class="glyphicon glyphicon-chevron-up" ></span>
+    </a>
+</footer>
+
+<script>
+    $(document).ready(function(){
+        // Add smooth scrolling to all links in navbar + footer link
+        $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+                // Prevent default anchor click behavior
+                event.preventDefault();
+
+                // Store hash
+                var hash = this.hash;
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 900, function(){
+
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    window.location.hash = hash;
+                });
+            } // End if
+        });
+
+        $(window).scroll(function() {
+            $(".slideanim").each(function(){
+                var pos = $(this).offset().top;
+
+                var winTop = $(window).scrollTop();
+                if (pos < winTop + 600) {
+                    $(this).addClass("slide");
+                }
+            });
+        });
+    })
+</script>
+
+</body>
+</html>
