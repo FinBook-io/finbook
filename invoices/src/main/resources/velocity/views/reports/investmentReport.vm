@@ -1,0 +1,296 @@
+#parse("/velocity/layout/mainLayout.vm")
+#@mainLayout()
+
+<link rel="stylesheet" href="/css/reports.css">
+
+<div class="rightbox">
+    <div class="content">
+        <div class="contentTitle">
+            <div class="row phonescrollable">
+                <div class="col-9"><h2>$msg.get("IRPRT_INVESTMENTSREPORT")</h2></div>
+                <div class="col-3">
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#myModal">$msg.get("RPRT_COMPARE")
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="phonescrollable">
+            <table class="table table-hover fixed_header" id="myTable">
+                <thead>
+                <tr>
+                    <th>$msg.get("GNRL_INVESTMENTS")</th>
+                    <th><span class="numSpan">$msg.get("RPRT_TOTALAMOUNT")</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="buildings" class="opener">
+                    <td>$msg.get("IRPRT_BUILDINGS")</td>
+                    <td><span class="numSpan">$number.format("currency",$report.getBuildingsBase())</span></td>
+                </tr>
+                    #foreach($bill in $report.getBuildings())
+                    <tr data-href="$bill.getUUID()" class="hidden buildings bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td><span class="numSpan">$number.format("currency",$bill.getSubtotal())</span></td>
+                    </tr>
+                    #end
+                <tr id="furniture" class="opener">
+                    <td>$msg.get("IRPRT_FURNITURE")</td>
+                    <td><span class="numSpan">$number.format("currency",$report.getOfficeEquipmentBase())</span></td>
+                </tr>
+                    #foreach($bill in $report.getOfficeEquipment())
+                    <tr data-href="$bill.getUUID()" class="hidden furniture bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td><span class="numSpan">$number.format("currency",$bill.getSubtotal())</span></td>
+                    </tr>
+                    #end
+                <tr id="transport" class="opener">
+                    <td>$msg.get("IRPRT_TRANSPORT")</td>
+                    <td><span class="numSpan">$number.format("currency",$report.getTransportEquipmentBase())</span></td>
+                </tr>
+                    #foreach($bill in $report.getTransportEquipment())
+                    <tr data-href="$bill.getUUID()" class="hidden transport bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td><span class="numSpan">$number.format("currency",$bill.getSubtotal())</span></td>
+                    </tr>
+                    #end
+                <tr id="computational" class="opener">
+                    <td>$msg.get("IRPRT_COMPUTATIONAL")</td>
+                    <td><span class="numSpan">$number.format("currency",$report.getComputationalEquipmentBase())</span></td>
+                </tr>
+                    #foreach($bill in $report.getComputationalEquipment())
+                    <tr data-href="$bill.getUUID()" class="hidden computational bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td><span class="numSpan">$number.format("currency",$bill.getSubtotal())</span></td>
+                    </tr>
+                    #end
+                <tr id="models" class="opener">
+                    <td>$msg.get("IRPRT_MODELS")</td>
+                    <td><span class="numSpan">$number.format("currency",$report.getModelsAndToolsBase())</span></td>
+                </tr>
+                    #foreach($bill in $report.getModelsAndTools())
+                    <tr data-href="$bill.getUUID()" class="hidden models bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td><span class="numSpan">$number.format("currency",$bill.getSubtotal())</span></td>
+                    </tr>
+                    #end
+                <tr id="telephone" class="opener">
+                    <td>$msg.get("IRPRT_TELEPHONE")</td>
+                    <td><span class="numSpan">$number.format("currency",$report.getTelephoneCommunicationsBase())</span></td>
+                </tr>
+                    #foreach($bill in $report.getTelephoneCommunications())
+                    <tr data-href="$bill.getUUID()" class="hidden telephone bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td><span class="numSpan">$number.format("currency",$bill.getSubtotal())</span></td>
+                    </tr>
+                    #end
+                <tr id="satellite" class="opener">
+                    <td>$msg.get("IRPRT_SATELLITE")</td>
+                    <td><span class="numSpan">$number.format("currency",$report.getSatelliteCommunicationsBase())</span></td>
+                </tr>
+                    #foreach($bill in $report.getSatelliteCommunications())
+                    <tr data-href="$bill.getUUID()" class="hidden satellite bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td><span class="numSpan">$number.format("currency",$bill.getSubtotal())</span></td>
+                    </tr>
+                    #end
+                <tr id="other" class="opener">
+                    <td>$msg.get("IRPRT_OTHER")</td>
+                    <td><span class="numSpan">$number.format("currency",$report.getOtherMachineryAndEquipmentBase())</span></td>
+                </tr>
+                    #foreach($bill in $report.getOtherMachineryAndEquipment())
+                    <tr data-href="$bill.getUUID()" class="hidden other bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td><span class="numSpan">$number.format("currency",$bill.getSubtotal())</span></td>
+                    </tr>
+                    #end
+                <tr class="mainResult">
+                    <td>$msg.get("IRPRT_ALL")</td>
+                    <td><span class="numSpan">$number.format("currency",$report.getBase())</span></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="leftbox">
+    <div class="content left-content">
+        <div>
+            <h4 class="contentTitle">$msg.get("RPRT_PERIOD")</h4>
+            <br>
+            <div>
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <p>$msg.get("GNRL_PERIODSTART")</p>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" type="date" value="2011-08-19" id="pStart" name="periodStart">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>$msg.get("GNRL_PERIODEND")</p>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" type="date" value="2011-08-19" id="pEnd" name="periodEnd">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" value="Submit" class="btn btn-secondary" id="submitButton">$msg.get("GNRL_SUBMIT")
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="content report-chart-container">
+        <div>
+            <h4 class="contentTitle">$msg.get("GNRL_INVESTMENTS") $msg.get("GNRL_CHART")</h4>
+        </div>
+        <div id="piechart" style="height:90%"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">$msg.get("RPRT_SELECTPERIODCOMPARE")</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="compareForm" action="/reports/compare/investments">
+                    <div class="container">
+                        <h6>$msg.get("RPRT_REPORT") 1</h6>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <p>$msg.get("GNRL_PERIODSTART")</p>
+                            </div>
+                            <div class="col-8">
+                                <input class="form-control" type="date" id="pStart1" value="2016-08-19"
+                                       name="periodStart">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>$msg.get("GNRL_PERIODEND")</p>
+                            </div>
+                            <div class="col-8">
+                                <input class="form-control" type="date" id="pEnd1" value="2017-08-19" name="periodEnd">
+                            </div>
+                        </div>
+                        <h6>$msg.get("RPRT_REPORT") 2</h6>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <p>$msg.get("GNRL_PERIODSTART")</p>
+                            </div>
+                            <div class="col-8">
+                                <input class="form-control" type="date" id="pStart2" value="2018-08-19"
+                                       name="periodStart1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>$msg.get("GNRL_PERIODEND")</p>
+                            </div>
+                            <div class="col-8">
+                                <input class="form-control" type="date" id="pEnd2" value="2019-08-19" name="periodEnd1">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">$msg.get("GNRL_CANCEL")</button>
+                <button type="submit" form="compareForm" class="btn btn-success">$msg.get("RPRT_COMPARE")</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<script>
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    var data;
+    var options;
+    var chart;
+
+    function drawChart() {
+        data = google.visualization.arrayToDataTable([
+            ['$msg.get("GNRL_INVESTMENT")', 'Base'],
+            #foreach($key in $barChart)
+                ['$key',$barChart.getCount($key)],
+            #end
+        ]);
+
+        options = {
+            title: '$msg.get("GNRL_INVESTMENT")',
+            backgroundColor: 'rgb(247,250,252)'
+        };
+
+        chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+
+    function resize() {
+        chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+    }
+
+    window.onload = resize;
+    window.onresize = resize;
+
+    document.getElementsByClassName('overlay')[0].addEventListener('transitionend', function (event) {
+        if (event.propertyName !== 'width') return;
+        resize();
+        setTimeout(function(){ resize()},10);
+    });
+</script>
+
+<script src="/javascript/reportsControl.js"></script>
+
+<script>
+    setPeriodStartDate($report.getPeriodStart().getYear(),$report.getPeriodStart().getMonth(),$report.getPeriodStart().getDate())
+    setPeriodEndDate($report.getPeriodEnd().getYear(),$report.getPeriodEnd().getMonth(),$report.getPeriodEnd().getDate())
+</script>
+
+#end
+	

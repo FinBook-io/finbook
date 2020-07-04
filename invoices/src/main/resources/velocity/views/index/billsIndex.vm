@@ -1,0 +1,96 @@
+#parse("/velocity/views/layout.vm")
+#mainLayout()
+<html>
+	<style>
+		.box{
+			margin-top: 1%;
+			margin-bottom: 1%;
+			max-width:45%;
+			height:70%;
+			font-size:300%;
+			box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+			border-radius:6px;
+			cursor:pointer;
+			font-family: "Times New Roman";
+			background-color: rgb(247,250,252);
+			border: solid 1px black;
+		}
+		.box:hover {
+			transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+		}
+		.box img{
+			height:20%;
+		}
+
+
+		.leftbox {
+			float: left;
+			margin-left: 3%;
+		}
+		.rightbox{
+			float: right;
+			margin-right: 3%;
+		}
+
+		.center{
+			display:flex;
+			justify-content: center;
+			align-items: center;
+
+		}
+
+
+
+		@media screen and (max-width: 992px) {
+			.box {
+				max-width: 90%;
+				max-height: 35%;
+				margin-bottom:2%;
+				font-size:200%
+			}
+			.box img{
+				height:40%;
+			}
+			.leftbox{
+				float: none;
+				margin-left:5%;
+				margin-right:3%
+			}
+			.rightbox{
+				float: none;
+				margin-left:5%;
+				margin-right:3%;
+			}
+		}
+
+		[data-href] {
+			cursor: pointer;
+		}
+
+
+
+	</style>
+	<body class="main">
+		<div>
+			<div class="container box leftbox center" data-href="/bills">
+				<img src="/myBills2.png">
+				<p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Bills</p>
+			</div>
+			<div class="container box rightbox center" data-href="/timeline">
+				<img src="/timeline.png">
+				<p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspTimeline</p>
+			</div>
+
+		</div>
+	</body>
+
+	<script>
+		jQuery(document).ready(function($) {
+			$('*[data-href]').on('click', function() {
+				window.location = $(this).data("href");
+			});
+		});
+	</script>
+
+</html>	
+	

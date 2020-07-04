@@ -1,0 +1,320 @@
+#parse("/velocity/layout/mainLayout.vm")
+#@mainLayout()
+
+
+<link rel="stylesheet" href="/css/reports.css">
+<link rel="stylesheet" href="/css/amortizationReport.css">
+
+
+<div class="rightbox">
+    <div class="content">
+        <div class="contentTitle">
+            <div class="row phonescrollable">
+                <div class="col-9"><h2>$msg.get("ARPRT_AMORTIZATIONREPORT")</h2></div>
+            </div>
+        </div>
+
+        <br>
+        <div class="table-side-scrollable">
+            <table class="table table-hover fixed_header" id="myTable">
+                <thead>
+                <tr>
+                    <th>$msg.get("GNRL_INVESTMENT")</th>
+                    <th><span class="td-small">$msg.get("GNRL_DATE")</span></th>
+                    <th><span class="td-subtotal">Subtotal</span></th>
+                    <th><span class="td-small">% $msg.get("GNRL_AMORTIZATION_SM")</span></th>
+                    <th><span class="td-subtotal">$msg.get("GNRL_AMORTIZATION")</span></th>
+                    <th><span class="td-medium">$msg.get("ARPRT_PERIODAMORTIZATION")</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="buildings" class="opener">
+                    <td>$msg.get("IRPRT_BUILDINGS")</td>
+                    <td></td>
+                    <td><span class="td-subtotal">$number.format("currency",$report.calculateBase($report.getBuildings()))</span></td>
+                    <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($report.getBuildings())) %</span>
+                    </td>
+                    <td><span class="td-subtotal">$number.format("currency",$report.calculateAccumulatedAmortization($report.getBuildings()))</span></td>
+                    <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($report.getBuildings()))</span></td>
+                </tr>
+                    #foreach($bill in $report.getBuildings())
+                    <tr data-href="$bill.getUUID()" class="hidden buildings bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td>$date.format("MMM dd, yyyy",$bill.getDate())</td>
+                        <td><span class="td-subtotal">$number.format("currency",$bill.getSubtotal())</span></td>
+                        <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($bill)) %</span></td>
+                        <td><span class="td-subtotal">$number.format("currency",$report.calculateAccumulatedAmortization($bill))</span></td>
+                        <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($bill))</span></td>
+                    </tr>
+                    #end
+                <tr id="furniture" class="opener">
+                    <td>$msg.get("IRPRT_FURNITURE")</td>
+                    <td></td>
+                    <td><span class="td-subtotal">$number.format("currency",$report.calculateBase($report.getOfficeEquipment()))</span></td>
+                    <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($report.getOfficeEquipment())) %</span>
+                    </td>
+                    <td><span class="td-subtotal">$number.format(
+                        "currency",$report.calculateAccumulatedAmortization($report.getOfficeEquipment()))</span></td>
+                    <td><span class="td-medium">$number.format(
+                        "currency",$report.calculatePeriodAmortization($report.getOfficeEquipment()))</span></td>
+                </tr>
+                    #foreach($bill in $report.getOfficeEquipment())
+                    <tr data-href="$bill.getUUID()" class="hidden furniture bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td>$date.format("MMM dd, yyyy",$bill.getDate())</td>
+                        <td><span class="td-subtotal">$number.format("currency",$bill.getSubtotal())</span></td>
+                        <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($bill)) %</span></td>
+                        <td><span class="td-subtotal">$number.format("currency",$report.calculateAccumulatedAmortization($bill))</span></td>
+                        <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($bill))</span></td>
+                    </tr>
+                    #end
+                <tr id="transport" class="opener">
+                    <td>$msg.get("IRPRT_TRANSPORT")</td>
+                    <td></td>
+                    <td><span class="td-subtotal">$number.format("currency",$report.calculateBase($report.getTransportEquipment()))</span></td>
+                    <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($report.getTransportEquipment()))
+                        %</span>
+                    </td>
+                    <td><span class="td-subtotal">$number.format(
+                        "currency",$report.calculateAccumulatedAmortization($report.getTransportEquipment()))</span></td>
+                    <td><span class="td-medium">$number.format(
+                        "currency",$report.calculatePeriodAmortization($report.getTransportEquipment()))</span></td>
+                </tr>
+                    #foreach($bill in $report.getTransportEquipment())
+                    <tr data-href="$bill.getUUID()" class="hidden transport bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td>$date.format("MMM dd, yyyy",$bill.getDate())</td>
+                        <td><span class="td-subtotal">$number.format("currency",$bill.getSubtotal())</span></td>
+                        <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($bill)) %</span></td>
+                        <td><span class="td-subtotal">$number.format("currency",$report.calculateAccumulatedAmortization($bill))</span></td>
+                        <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($bill))</span></td>
+                    </tr>
+                    #end
+                <tr id="computational" class="opener">
+                    <td>$msg.get("IRPRT_COMPUTATIONAL")</td>
+                    <td></td>
+                    <td><span class="td-subtotal">$number.format("currency",$report.calculateBase($report.getComputationalEquipment()))</span></td>
+                    <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($report.getComputationalEquipment()))
+                        %</span>
+                    </td>
+                    <td><span class="td-subtotal">$number.format(
+                        "currency",$report.calculateAccumulatedAmortization($report.getComputationalEquipment()))</span></td>
+                    <td><span class="td-medium">$number.format(
+                        "currency",$report.calculatePeriodAmortization($report.getComputationalEquipment()))</span></td>
+                </tr>
+                    #foreach($bill in $report.getComputationalEquipment())
+                    <tr data-href="$bill.getUUID()" class="hidden computational bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td>$date.format("MMM dd, yyyy",$bill.getDate())</td>
+                        <td><span class="td-subtotal">$number.format("currency",$bill.getSubtotal())</span></td>
+                        <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($bill)) %</span></td>
+                        <td><span class="td-subtotal">$number.format("currency",$report.calculateAccumulatedAmortization($bill))</span></td>
+                        <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($bill))</span></td>
+                    </tr>
+                    #end
+                <tr id="models" class="opener">
+                    <td>$msg.get("IRPRT_MODELS")</td>
+                    <td></td>
+                    <td><span class="td-subtotal">$number.format("currency",$report.calculateBase($report.getModelsAndTools()))</span></td>
+                    <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($report.getModelsAndTools()))
+                        %</span>
+                    </td>
+                    <td><span class="td-subtotal">$number.format(
+                        "currency",$report.calculateAccumulatedAmortization($report.getModelsAndTools()))</span></td>
+                    <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($report.getModelsAndTools()))</span></td>
+                </tr>
+                    #foreach($bill in $report.getModelsAndTools())
+                    <tr data-href="$bill.getUUID()" class="hidden models bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td>$date.format("MMM dd, yyyy",$bill.getDate())</td>
+                        <td><span class="td-subtotal">$number.format("currency",$bill.getSubtotal())</span></td>
+                        <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($bill)) %</span></td>
+                        <td><span class="td-subtotal">$number.format("currency",$report.calculateAccumulatedAmortization($bill))</span></td>
+                        <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($bill))</span></td>
+                    </tr>
+                    #end
+                <tr id="telephone" class="opener">
+                    <td>$msg.get("IRPRT_TELEPHONE")</td>
+                    <td></td>
+                    <td><span class="td-subtotal">$number.format("currency",$report.calculateBase($report.getTelephoneCommunications()))</span></td>
+                    <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($report.getTelephoneCommunications()))
+                        %</span>
+                    </td>
+                    <td><span class="td-subtotal">$number.format(
+                        "currency",$report.calculateAccumulatedAmortization($report.getTelephoneCommunications()))</span></td>
+                    <td><span class="td-medium">$number.format(
+                        "currency",$report.calculatePeriodAmortization($report.getTelephoneCommunications()))</span></td>
+                </tr>
+                    #foreach($bill in $report.getTelephoneCommunications())
+                    <tr data-href="$bill.getUUID()" class="hidden telephone bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td>$date.format("MMM dd, yyyy",$bill.getDate())</td>
+                        <td><span class="td-subtotal">$number.format("currency",$bill.getSubtotal())</span></td>
+                        <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($bill)) %</span></td>
+                        <td><span class="td-subtotal">$number.format("currency",$report.calculateAccumulatedAmortization($bill))</span></td>
+                        <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($bill))</span></td>
+                    </tr>
+                    #end
+                <tr id="satellite" class="opener">
+                    <td>$msg.get("IRPRT_SATELLITE")</td>
+                    <td></td>
+                    <td><span class="td-subtotal">$number.format("currency",$report.calculateBase($report.getSatelliteCommunications()))</span></td>
+                    <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($report.getSatelliteCommunications()))
+                        %</span>
+                    </td>
+                    <td><span class="td-subtotal">$number.format(
+                        "currency",$report.calculateAccumulatedAmortization($report.getSatelliteCommunications()))</span></td>
+                    <td><span class="td-medium">$number.format(
+                        "currency",$report.calculatePeriodAmortization($report.getSatelliteCommunications()))</span></td>
+                </tr>
+                    #foreach($bill in $report.getSatelliteCommunications())
+                    <tr data-href="$bill.getUUID()" class="hidden satellite bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td>$date.format("MMM dd, yyyy",$bill.getDate())</td>
+                        <td><span class="td-subtotal">$number.format("currency",$bill.getSubtotal())</span></td>
+                        <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($bill)) %</span></td>
+                        <td><span class="td-subtotal">$number.format("currency",$report.calculateAccumulatedAmortization($bill))</span></td>
+                        <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($bill))</span></td>
+                    </tr>
+                    #end
+                <tr id="other" class="opener">
+                    <td>$msg.get("IRPRT_OTHER")</td>
+                    <td></td>
+                    <td><span class="td-subtotal">$number.format("currency",$report.calculateBase($report.getOtherMachineryAndEquipment()))</span></td>
+                    <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($report.getOtherMachineryAndEquipment()))
+                        %</span>
+                    </td>
+                    <td><span class="td-subtotal">$number.format(
+                        "currency",$report.calculateAccumulatedAmortization($report.getOtherMachineryAndEquipment()))</span></td>
+                    <td><span class="td-medium">$number.format(
+                        "currency",$report.calculatePeriodAmortization($report.getOtherMachineryAndEquipment()))</span></td>
+                </tr>
+                    #foreach($bill in $report.getOtherMachineryAndEquipment())
+                    <tr data-href="$bill.getUUID()" class="hidden other bill">
+                        <td>
+                            <li>$bill.getConcept()</li>
+                        </td>
+                        <td>$date.format("MMM dd, yyyy",$bill.getDate())</td>
+                        <td><span class="td-subtotal">$number.format("currency",$bill.getSubtotal())</span></td>
+                        <td><span class="td-small">$math.roundTo(2,$report.calculateAccumulatedAmortizationPercentage($bill)) %</span></td>
+                        <td><span class="td-subtotal">$number.format("currency",$report.calculateAccumulatedAmortization($bill))</span></td>
+                        <td><span class="td-medium">$number.format("currency",$report.calculatePeriodAmortization($bill))</span></td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="leftbox">
+    <div class="content left-content">
+        <div>
+            <h4 class="contentTitle">$msg.get("ARPRT_PERIODAMORTIZATION")</h4>
+            <br>
+            <div>
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <p>$msg.get("GNRL_PERIODSTART")</p>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" type="date" value="2011-08-19" id="pStart" name="periodStart">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>$msg.get("GNRL_PERIODEND")</p>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" type="date" value="2011-08-19" id="pEnd" name="periodEnd">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" value="Submit" class="btn btn-secondary" id="submitButton">Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="content report-chart-container">
+        <div>
+            <h4 class="contentTitle">$msg.get("ARPRT_AMORTIZATIONCHART")</h4>
+        </div>
+        <div id="reportchart" style="height:90%"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    var data;
+    var options;
+    var chart;
+
+    function drawChart() {
+        data = google.visualization.arrayToDataTable([
+            ['$msg.get("GNRL_INVESTMENT")', 'amortization', {role: 'annotation'}, { role: 'style' }],
+            #foreach($key in $barChart)
+                ['$key',$math.roundTo(2,$barChart.getCount($key)), '$math.roundTo(2,$barChart.getCount($key)) %', 'rgb(121,202,207)'],
+            #end
+        ]);
+
+        options = {
+            title: '$msg.get("GNRL_AMORTIZATION")',
+            backgroundColor: 'rgb(247,250,252)',
+            legend: {position:'none'}
+        };
+
+        chart = new google.visualization.BarChart(document.getElementById('reportchart'));
+
+        chart.draw(data, options);
+    }
+
+    function resize() {
+        chart = new google.visualization.BarChart(document.getElementById('reportchart'));
+        chart.draw(data, options);
+    }
+
+    window.onload = resize;
+    window.onresize = resize;
+
+    document.getElementsByClassName('overlay')[0].addEventListener('transitionend', function (event) {
+        if (event.propertyName !== 'width') return;
+        resize();
+        setTimeout(function(){ resize()},10);
+    });
+</script>
+
+<script src="/javascript/reportsControl.js"></script>
+
+<script>
+    setPeriodStartDate($report.getPeriodStart().getYear(),$report.getPeriodStart().getMonth(),$report.getPeriodStart().getDate())
+    setPeriodEndDate($report.getPeriodEnd().getYear(),$report.getPeriodEnd().getMonth(),$report.getPeriodEnd().getDate())
+</script>
+
+#end
+
