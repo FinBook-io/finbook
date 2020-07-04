@@ -1,0 +1,5 @@
+dsl Konos
+
+Datalake(path = "{datalake_directory}") as Local
+
+Subscriber(event = "Invoice", subscriberId = "Invoice") invoiceSubscriber

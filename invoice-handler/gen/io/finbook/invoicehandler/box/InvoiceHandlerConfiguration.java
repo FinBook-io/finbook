@@ -9,31 +9,27 @@ public class InvoiceHandlerConfiguration extends io.intino.alexandria.core.BoxCo
 		super(args);
 	}
 
+	public String datahubUrl() {
+		return get("datahub_url");
+	}
+
+	public String datahubUser() {
+		return get("datahub_user");
+	}
+
+	public String datahubPassword() {
+		return get("datahub_password");
+	}
+
+	public String datahubClientid() {
+		return get("datahub_clientId");
+	}
+
+	public String datahubOutboxDirectory() {
+		return get("datahub_outbox_directory");
+	}
+
 	public String datalakeDirectory() {
 		return get("datalake_directory");
-	}
-
-	public String terminalUser() {
-		return get("terminal_user");
-	}
-
-	public String terminalPassword() {
-		return get("terminal_password");
-	}
-
-	public String terminalClientid() {
-		return get("terminal_clientId");
-	}
-
-	public String terminalUrl() {
-		return get("terminal_url");
-	}
-
-	public String port() {
-		return get("port");
-	}
-
-	public String terminalWorkingDirectory() {
-		return get("terminal_working_directory");
 	}
 }

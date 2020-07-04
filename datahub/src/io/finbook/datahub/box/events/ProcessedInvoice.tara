@@ -1,0 +1,18 @@
+dsl Ness
+
+Event ProcessedInvoice
+	Attribute UUID as Text
+	Attribute date as DateTime
+	Attribute PC as Integer
+	Attribute type as Text
+	Attribute Use as Text
+	Attribute Concept as Text
+	Attribute issuerName as Text
+	Attribute issuerRFC as Text
+	Attribute receiverName as Text
+	Attribute receiverRFC as Text
+	Attribute subtotal as Real
+	Attribute taxRate as Real
+	Attribute total as Real
+	Attribute currency as Text
+	Attribute xml as Text

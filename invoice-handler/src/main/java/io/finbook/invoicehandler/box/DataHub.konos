@@ -1,9 +1,0 @@
-dsl Konos
-
-Datalake(path = "{datalake_directory}") as Local
-
-Datamart(type = Graph) graph
-	Mounter invoiceHandler as Event
-		Require("Invoices")
-
-Subscriber(tank = "Invoices", subscriberId = "Invoices") invoicesSubscriber

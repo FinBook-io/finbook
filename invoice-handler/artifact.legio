@@ -2,36 +2,53 @@ dsl Legio
 
 Artifact(groupId = "io.finbook", version = "1.0.0") invoice-handler as Product
 	Model(language = "Proteo", version = "3.0.0", sdk = "4.0.0")
-	Box(language = "Konos", version = "8.2.8")
-	DataHub("io.finbook.datahub", "handler-terminal", "1.0.0")
+	DataHub("io.finbook.datahub", "handler-terminal", "2.0.0")
+	Box(language = "Konos", version = "8.8.3")
 	Imports
 		Compile("io.intino.alexandria", "core-framework", "2.0.4")
-		Compile(groupId = "io.intino.alexandria", artifactId = "datalake", version = "2.1.0")
-	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.finbook.invoicehandler.box.Main")
-
+		Compile("io.finbook", "sign-verify", "1.0")
+		Compile(groupId = "io.intino.alexandria", artifactId = "datalake", version = "3.0.1")
+	Package(mode = LibrariesLinkedByManifest) as Runnable("io.finbook.invoicehandler.box.Main")
+	Distribution(monentia.release, snapshot = monentia.snapshot)
+    Deployment(deploy-alpgc-smartbeach-dev, dev) Monentia
 	Parameter("home")
-	Parameter("port")
-
-	Parameter("terminal_url")
-	Parameter("terminal_user")
-	Parameter("terminal_password")
-	Parameter("terminal_clientId")
-	Parameter("terminal_working_directory")
-
+	Parameter("datahub_url")
+	Parameter("datahub_user")
+	Parameter("datahub_password")
+	Parameter("datahub_clientId")
+	Parameter("datahub_outbox_directory")
 	Parameter("datalake_directory")
 
 Repository(identifier = "intino-maven")
-	Language("https://artifactory.intino.io/artifactory/release-languages") language
-	Release("https://artifactory.intino.io/artifactory/releases")
+	Language(url = "https://artifactory.intino.io/artifactory/releases")
+	Release(url = "https://artifactory.intino.io/artifactory/releases")
 
 Repository("monentia-maven") monentia
+	Snapshot("https://artifactory.monentia.es/artifactory/libs-snapshot")
+	Release("https://artifactory.monentia.es/artifactory/libs-release")
 	Release("https://artifactory.monentia.es/artifactory/libs-release-local") release
-	Language("https://artifactory.monentia.es/artifactory/release-languages") language
+	Snapshot("https://artifactory.monentia.es/artifactory/libs-snapshot-local") snapshot
 
 RunConfiguration local
-	Argument("home", "./temp")
-	Argument("port", "9000")
-	Argument("terminal_url", "failover:(tcp://localhost:63000)")
-	Argument("terminal_user", "io.finbook.handler")
-	Argument("terminal_password", "io.finbook.handler")
-	Argument("terminal_clientId", "io.finbook.handler")
+	Argument("datahub_user", "io.finbook.handler")
+    Argument("datahub_password", "io.finbook.handler")
+    Argument("datahub_clientId", "io.finbook.handler")
+
+    Argument("home", "./temp")
+	Argument("datahub_url", "failover:(tcp://localhost:63001)")
+	Argument("datahub_outbox_directory", "./temp/terminals")
+
+	Argument("datalake_directory", "./temp/datalake")
+
+RunConfiguration dev
+	Argument("datahub_user", "io.finbook.handler")
+    Argument("datahub_password", "io.finbook.handler")
+    Argument("datahub_clientId", "io.finbook.handler")
+
+    Argument("home", "./temp")
+	Argument("datahub_url", "failover:(tcp://localhost:63001)")
+	Argument("datahub_outbox_directory", "./temp/terminals")
+
+	Argument("datalake_directory", "./temp/datalake")
+
+Server(type = Dev) deploy-alpgc-smartbeach-dev

@@ -1,4 +1,0 @@
-dsl Konos
-
-Schema dummy
-	Attribute t as Text

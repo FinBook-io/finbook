@@ -20,6 +20,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="datahub" />
         <module name="simulator" />
         <module name="reports" />
         <module name="invoice-handler" />
@@ -27,11 +28,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11">
-      <module name="invoice-handler" target="1.5" />
+      <module name="datahub" target="11" />
+      <module name="invoice-handler" target="11" />
       <module name="invoices" target="1.5" />
       <module name="reports" target="1.5" />
+      <module name="sensor" target="11" />
       <module name="simulator" target="1.5" />
-      <module name="tester" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

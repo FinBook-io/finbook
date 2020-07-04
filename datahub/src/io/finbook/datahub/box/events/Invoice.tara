@@ -1,0 +1,4 @@
+dsl Ness
+
+Event Invoice
+	Attribute xml as Text

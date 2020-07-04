@@ -1,26 +1,56 @@
 dsl Legio
 
-Artifact(groupId = "io.finbook", version = "1.0.0") data-hub as Solution
-	Model(language = "Ness", version = "4.0.0", sdk = "4.0.0")
-    Box(language = "Konos", version = "8.2.8")
+Artifact(groupId = "io.finbook", version = "2.0.0") data-hub as Solution
+	Model(language = "Ness", version = "4.6.2", sdk = "4.1.1")
+    Box(language = "Konos", version = "8.8.3")
 	Imports
 		Compile("io.intino.alexandria", "core-framework", "2.0.4")
+
 	Package(mode = ModulesAndLibrariesLinkedByManifest) as Runnable("io.finbook.datahub.box.Main")
-	IntinoPlugin(artifact = "io.intino.ness:data-hub-terminal-plugin:2.1.1", pluginClass = "io.intino.ness.datahubterminalplugin.DataHubTerminalsPluginLauncher", phase=Export)
-    Distribution(monentia.release)
+	Distribution(monentia.release, snapshot = monentia.snapshot)
+    Deployment(deploy-alpgc-smartbeach-dev, dev) Monentia
+	IntinoPlugin(artifact = "io.intino.ness:data-hub-terminal-plugin:2.7.7", pluginClass = "io.intino.ness.datahubterminalplugin.DataHubTerminalsPluginLauncher", phase=Export)
 
-	Parameter("home")
+	Parameter("datalake_directory")
 	Parameter("broker_port")
-    Parameter("broker_secondary_port")
+	Parameter("broker_secondary_port")
+	Parameter("ui_port")
 
-Repository("intino-maven")
-	Language("https://artifactory.intino.io/artifactory/releases")
-	Release("https://artifactory.intino.io/artifactory/releases")
+	Parameter("stage_directory")
+    Parameter("broker_directory")
+    Parameter("backup_directory")
+    Parameter("home")
+
+Repository(identifier = "intino-maven")
+	Language(url = "https://artifactory.intino.io/artifactory/releases")
+	Release(url = "https://artifactory.intino.io/artifactory/releases")
 
 Repository("monentia-maven") monentia
+	Snapshot("https://artifactory.monentia.es/artifactory/libs-snapshot")
+	Release("https://artifactory.monentia.es/artifactory/libs-release")
 	Release("https://artifactory.monentia.es/artifactory/libs-release-local") release
+	Snapshot("https://artifactory.monentia.es/artifactory/libs-snapshot-local") snapshot
 
 RunConfiguration local
-	Argument("home", "./temp")
-	Argument("broker_port", "63000")
-	Argument("broker_secondary_port", "1883")
+	Argument("datalake_directory", "./temp/datalake")
+	Argument("broker_port", "63001")
+	Argument("broker_secondary_port", "1884")
+	Argument("ui_port", "9020")
+
+	Argument("home", "./temp/datahub")
+	Argument("stage_directory", "./temp/datahub/stage")
+	Argument("broker_directory", "./temp/datahub/broker")
+	Argument("backup_directory", "./temp/backup")
+
+RunConfiguration dev
+	Argument("datalake_directory", "./temp/datalake")
+	Argument("broker_port", "63001")
+	Argument("broker_secondary_port", "1884")
+	Argument("ui_port", "9020")
+
+	Argument("home", "./temp/datahub")
+	Argument("stage_directory", "./temp/datahub/stage")
+	Argument("broker_directory", "./temp/datahub/broker")
+	Argument("backup_directory", "./temp/backup")
+
+Server(type = Dev) deploy-alpgc-smartbeach-dev

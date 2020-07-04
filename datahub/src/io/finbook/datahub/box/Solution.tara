@@ -1,0 +1,28 @@
+dsl Ness
+
+use Invoice
+use ProcessedInvoice
+
+Broker(path = empty, port = empty, secondaryPort = empty)
+	User("io.finbook.sensor", "io.finbook.sensor")
+	User("io.finbook.datamart", "io.finbook.datamart")
+	User("io.finbook.handler", "io.finbook.handler")
+
+Datalake(scale=Month, path = empty) dl
+	Context io
+		Context finbook
+
+	Tank(event = Invoice) invoice as Event Contextual(io.finbook)
+	Tank(event = ProcessedInvoice) processedInvoice as Event Contextual(io.finbook)
+	
+	Seal > Cron(pattern = "0 0 4 1/1 * ? *", timeZone = "Atlantic/Canary") cron
+
+Terminal sensorTerminal
+	Publish(dl.invoice)
+
+Terminal datamartTerminal
+	Subscribe(dl.processedInvoice)
+
+Terminal handlerTerminal
+	Publish(dl.processedInvoice)
+	Subscribe(dl.invoice)
