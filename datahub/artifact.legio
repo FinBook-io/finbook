@@ -1,6 +1,6 @@
 dsl Legio
 
-Artifact(groupId = "io.finbook", version = "2.0.0") data-hub as Solution
+Artifact(groupId = "io.finbook", version = "2.0.0-SNAPSHOT") data-hub as Solution
 	Model(language = "Ness", version = "4.6.2", sdk = "4.1.1")
     Box(language = "Konos", version = "8.8.3")
 	Imports

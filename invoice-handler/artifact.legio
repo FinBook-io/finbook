@@ -1,8 +1,8 @@
 dsl Legio
 
-Artifact(groupId = "io.finbook", version = "1.0.0") invoice-handler as Product
+Artifact(groupId = "io.finbook", version = "1.0.0-SNAPSHOT") invoice-handler as Product
 	Model(language = "Proteo", version = "3.0.0", sdk = "4.0.0")
-	DataHub("io.finbook.datahub", "handler-terminal", "2.0.0")
+	DataHub("io.finbook.datahub", "handler-terminal", "1.0.0-SNAPSHOT")
 	Box(language = "Konos", version = "8.8.3")
 	Imports
 		Compile("io.intino.alexandria", "core-framework", "2.0.4")

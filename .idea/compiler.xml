@@ -30,9 +30,8 @@
     <bytecodeTargetLevel target="11">
       <module name="datahub" target="11" />
       <module name="invoice-handler" target="11" />
-      <module name="invoices" target="1.5" />
+      <module name="invoices" target="11" />
       <module name="reports" target="1.5" />
-      <module name="sensor" target="11" />
       <module name="simulator" target="1.5" />
     </bytecodeTargetLevel>
   </component>
