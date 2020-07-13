@@ -41,7 +41,7 @@ public class Mail {
 	}
 
 	public void sendMailAttachFile(String userMail, String filename) {
-		String pathToFile = "src/main/resources/public/finbook/files/temp/".concat(filename);
+		String pathToFile = "reporting/src/main/resources/public/finbook/files/temp/".concat(filename);
 		Session session = Session.getDefaultInstance(properties);
 
 		try {
