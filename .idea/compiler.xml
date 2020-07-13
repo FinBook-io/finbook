@@ -22,7 +22,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="datahub" />
         <module name="simulator" />
-        <module name="reports" />
+        <module name="reporting" />
         <module name="invoice-handler" />
         <module name="invoices" />
       </profile>
@@ -31,7 +31,7 @@
       <module name="datahub" target="11" />
       <module name="invoice-handler" target="11" />
       <module name="invoices" target="11" />
-      <module name="reports" target="1.5" />
+      <module name="reporting" target="11" />
       <module name="simulator" target="1.5" />
     </bytecodeTargetLevel>
   </component>

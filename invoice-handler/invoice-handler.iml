@@ -52,5 +52,13 @@
     <orderEntry type="library" name="Intino: io.intino.alexandria:ingestion:3.0.1" level="project" />
     <orderEntry type="library" name="Intino: io.intino.alexandria:session:1.0.0" level="project" />
     <orderEntry type="library" name="Intino: io.finbook.datahub:ontology:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: io.finbook:sign-verify:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcmail-jdk15on:1.64" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.64" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.64" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bctsp-jdk16:1.46" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk16:1.46" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcmail-jdk16:1.46" level="project" />
+    <orderEntry type="library" name="Maven: org.w3c:dom:2.3.0-jaxb-1.0.6" level="project" />
   </component>
 </module>
